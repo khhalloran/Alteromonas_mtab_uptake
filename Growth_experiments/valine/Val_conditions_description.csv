@@ -1,0 +1,49 @@
+﻿well,Condition number,Condition,Condition name,Total_uM_C,Total_mM_C,Carbon_source,Diauxic
+B3,4,D,300 uM Pyr 0 uM Val,900,0.9,Pyruvate,N
+B5,1,A,0 uM Pyr 0 uM Val,0,0,NA,N
+B6,6,F,600 uM Pyr 0 uM Val,1800,1.8,Pyruvate,N
+B7,8,H,900 uM Pyr 0 uM Val,2700,2.7,Pyruvate,N
+B8,2,B,0 uM Pyr 90 uM Val,450,0.45,Val,N
+B9,7,G,600 uM Pyr 180 uM Val,2700,2.7,Pyruvate and Val,Y
+B10,5,E,300 uM Pyr 180 uM Val,1800,1.8,Pyruvate and Val,Y
+C2,2,B,0 uM Pyr 90 uM Val,450,0.45,Val,N
+C3,7,G,600 uM Pyr 180 uM Val,2700,2.7,Pyruvate and Val,Y
+C4,5,E,300 uM Pyr 180 uM Val,1800,1.8,Pyruvate and Val,Y
+C5,4,D,300 uM Pyr 0 uM Val,900,0.9,Pyruvate,N
+C7,1,A,0 uM Pyr 0 uM Val,0,0,NA,N
+C9,6,F,600 uM Pyr 0 uM Val,1800,1.8,Pyruvate,N
+C10,3,C,0 uM Pyr 180 uM Val,900,0.9,Val,N
+C11,8,H,900 uM Pyr 0 uM Val,2700,2.7,Pyruvate,N
+D2,5,E,300 uM Pyr 180 uM Val,1800,1.8,Pyruvate and Val,Y
+D4,6,F,600 uM Pyr 0 uM Val,1800,1.8,Pyruvate,N
+D5,2,B,0 uM Pyr 90 uM Val,450,0.45,Val,N
+D6,8,H,900 uM Pyr 0 uM Val,2700,2.7,Pyruvate,N
+D7,3,C,0 uM Pyr 180 uM Val,900,0.9,Val,N
+D8,7,G,600 uM Pyr 180 uM Val,2700,2.7,Pyruvate and Val,Y
+D9,1,A,0 uM Pyr 0 uM Val,0,0,NA,N
+D11,4,D,300 uM Pyr 0 uM Val,900,0.9,Pyruvate,N
+E2,3,C,0 uM Pyr 180 uM Val,900,0.9,Val,N
+E3,8,H,900 uM Pyr 0 uM Val,2700,2.7,Pyruvate,N
+E4,7,G,600 uM Pyr 180 uM Val,2700,2.7,Pyruvate and Val,Y
+E6,1,A,0 uM Pyr 0 uM Val,0,0,NA,N
+E7,2,B,0 uM Pyr 90 uM Val,450,0.45,Val,N
+E8,5,E,300 uM Pyr 180 uM Val,1800,1.8,Pyruvate and Val,Y
+E10,4,D,300 uM Pyr 0 uM Val,900,0.9,Pyruvate,N
+E11,6,F,600 uM Pyr 0 uM Val,1800,1.8,Pyruvate,N
+F2,7,G,600 uM Pyr 180 uM Val,2700,2.7,Pyruvate and Val,Y
+F3,6,F,600 uM Pyr 0 uM Val,1800,1.8,Pyruvate,N
+F5,5,E,300 uM Pyr 180 uM Val,1800,1.8,Pyruvate and Val,Y
+F6,4,D,300 uM Pyr 0 uM Val,900,0.9,Pyruvate,N
+F8,3,C,0 uM Pyr 180 uM Val,900,0.9,Val,N
+F9,2,B,0 uM Pyr 90 uM Val,450,0.45,Val,N
+F10,8,H,900 uM Pyr 0 uM Val,2700,2.7,Pyruvate,N
+F11,1,A,0 uM Pyr 0 uM Val,0,0,NA,N
+G3,1,A,0 uM Pyr 0 uM Val,0,0,NA,N
+G4,4,D,300 uM Pyr 0 uM Val,900,0.9,Pyruvate,N
+G5,8,H,900 uM Pyr 0 uM Val,2700,2.7,Pyruvate,N
+G6,2,B,0 uM Pyr 90 uM Val,450,0.45,Val,N
+G7,5,E,300 uM Pyr 180 uM Val,1800,1.8,Pyruvate and Val,Y
+G8,6,F,600 uM Pyr 0 uM Val,1800,1.8,Pyruvate,N
+G9,3,C,0 uM Pyr 180 uM Val,900,0.9,Val,N
+G10,7,G,600 uM Pyr 180 uM Val,2700,2.7,Pyruvate and Val,Y
+B4,3,C,0 uM Pyr 180 uM Val,900,0.9,Val,N

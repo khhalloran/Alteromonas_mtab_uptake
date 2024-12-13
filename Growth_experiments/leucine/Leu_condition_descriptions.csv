@@ -1,0 +1,49 @@
+﻿well,Condition number,Condition,Condition name,Total_uM_C,Total_mM_C,Carbon_source,Diauxic
+B3,7,G,600 uM Pyr 150 uM Leu,2700,2.7,Pyruvate and Leu,Y
+B4,2,B,0 um Pyr 75 uM Leu,450,0.45,Leu,N
+B5,8,H,900 uM Pyr 0 uM Leu,2700,2.7,Pyruvate,N
+B6,5,E,300 M Pyr 150 uM Leu,1800,1.8,Pyruvate and Leu,Y
+B7,1,A,0 uM Pyr 0 uM Leu,0,0,NA,N
+B8,4,D,300 uM Pyr 0 uM Leu,900,0.9,Pyruvate,N
+B9,6,F,600 uM Pyr 0 uM Leu,1800,1.8,Pyruvate,N
+B10,3,C,0 uM Pyr 150 uM Leu,900,0.9,Leu,N
+C2,7,G,600 uM Pyr 150 uM Leu,2700,2.7,Pyruvate and Leu,Y
+C3,1,A,0 uM Pyr 0 uM Leu,0,0,NA,N
+C4,3,C,0 uM Pyr 150 uM Leu,900,0.9,Leu,N
+C6,8,H,900 uM Pyr 0 uM Leu,2700,2.7,Pyruvate,N
+C7,2,B,0 um Pyr 75 uM Leu,450,0.45,Leu,N
+C8,6,F,600 uM Pyr 0 uM Leu,1800,1.8,Pyruvate,N
+C10,5,E,300 M Pyr 150 uM Leu,1800,1.8,Pyruvate and Leu,Y
+C11,4,D,300 uM Pyr 0 uM Leu,900,0.9,Pyruvate,N
+D2,5,E,300 M Pyr 150 uM Leu,1800,1.8,Pyruvate and Leu,Y
+D3,2,B,0 um Pyr 75 uM Leu,450,0.45,Leu,N
+D4,4,D,300 uM Pyr 0 uM Leu,900,0.9,Pyruvate,N
+D5,3,C,0 uM Pyr 150 uM Leu,900,0.9,Leu,N
+D7,7,G,600 uM Pyr 150 uM Leu,2700,2.7,Pyruvate and Leu,Y
+D9,8,H,900 uM Pyr 0 uM Leu,2700,2.7,Pyruvate,N
+D10,1,A,0 uM Pyr 0 uM Leu,0,0,NA,N
+D11,6,F,600 uM Pyr 0 uM Leu,1800,1.8,Pyruvate,N
+E2,2,B,0 um Pyr 75 uM Leu,450,0.45,Leu,N
+E3,8,H,900 uM Pyr 0 uM Leu,2700,2.7,Pyruvate,N
+E5,5,E,300 M Pyr 150 uM Leu,1800,1.8,Pyruvate and Leu,Y
+E6,4,D,300 uM Pyr 0 uM Leu,900,0.9,Pyruvate,N
+E8,1,A,0 uM Pyr 0 uM Leu,0,0,NA,N
+E9,7,G,600 uM Pyr 150 uM Leu,2700,2.7,Pyruvate and Leu,Y
+E10,6,F,600 uM Pyr 0 uM Leu,1800,1.8,Pyruvate,N
+E11,3,C,0 uM Pyr 150 uM Leu,900,0.9,Leu,N
+F2,4,D,300 uM Pyr 0 uM Leu,900,0.9,Pyruvate,N
+F4,7,G,600 uM Pyr 150 uM Leu,2700,2.7,Pyruvate and Leu,Y
+F5,1,A,0 uM Pyr 0 uM Leu,0,0,NA,N
+F6,2,B,0 um Pyr 75 uM Leu,450,0.45,Leu,N
+F7,6,F,600 uM Pyr 0 uM Leu,1800,1.8,Pyruvate,N
+F8,5,E,300 M Pyr 150 uM Leu,1800,1.8,Pyruvate and Leu,Y
+F9,3,C,0 uM Pyr 150 uM Leu,900,0.9,Leu,N
+F11,8,H,900 uM Pyr 0 uM Leu,2700,2.7,Pyruvate,N
+G3,4,D,300 uM Pyr 0 uM Leu,900,0.9,Pyruvate,N
+G4,6,F,600 uM Pyr 0 uM Leu,1800,1.8,Pyruvate,N
+G5,7,G,600 uM Pyr 150 uM Leu,2700,2.7,Pyruvate and Leu,Y
+G6,3,C,0 uM Pyr 150 uM Leu,900,0.9,Leu,N
+G7,5,E,300 M Pyr 150 uM Leu,1800,1.8,Pyruvate and Leu,Y
+G8,2,B,0 um Pyr 75 uM Leu,450,0.45,Leu,N
+G9,1,A,0 uM Pyr 0 uM Leu,0,0,NA,N
+G10,8,H,900 uM Pyr 0 uM Leu,2700,2.7,Pyruvate,N

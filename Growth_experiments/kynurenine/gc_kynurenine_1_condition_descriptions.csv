@@ -1,0 +1,97 @@
+well,Condition number,Condition name,Condition,Total_uM_C,Total_mM_C,Carbon_source,HCl
+A1,0,Media blank,x,0,0,NA,N
+A2,0,Media blank,x,0,0,NA,N
+A3,0,Media blank,x,0,0,NA,N
+A4,0,Media blank,x,0,0,NA,N
+A5,0,Media blank,x,0,0,NA,N
+A6,0,Media blank,x,0,0,NA,N
+A7,0,Media blank,x,0,0,NA,N
+A8,0,Media blank,x,0,0,NA,N
+A9,0,Media blank,x,0,0,NA,N
+A10,0,Media blank,x,0,0,NA,N
+A11,0,Media blank,x,0,0,NA,N
+A12,0,Media blank,x,0,0,NA,N
+B1,0,Media blank,x,0,0,NA,N
+B2,1,0 uM Pyr 0 uM Kyn,A,0,0,NA,N
+B3,7,300 uM Pyr 0 uM Kyn trace HCl,G,900,0.9,Pyruvate,Y
+B4,3,150 uM Pyr 0 uM Kyn,C,450,0.45,Pyruvate,N
+B5,8,600 uM Pyr 0 uM Kyn,H,1800,1.8,Pyruvate,N
+B6,5,0 uM Pyr 100 uM Kyn,E,1000,1,Kyn,N
+B7,9,600 uM Pyr 100 uM Kyn,I,2800,2.8,Pyruvate and Kyn,N
+B8,2,0 uM Pyr 50 uM Kyn,B,500,0.5,Kyn,N
+B9,10,900 uM Pyr 0 uM Kyn,J,2700,2.7,Pyruvate,N
+B10,4,300 uM Pyr 0 uM Kyn  ,D,900,0.9,Pyruvate,N
+B11,6,300 uM Pyr 100 uM Kyn,F,1900,1.9,Pyruvate and Kyn,N
+B12,0,Media blank,x,0,0,NA,N
+C1,0,Media blank,x,0,0,NA,N
+C2,8,600 uM Pyr 0 uM Kyn,H,1800,1.8,Pyruvate,N
+C3,5,0 uM Pyr 100 uM Kyn,E,1000,1,Kyn,N
+C4,6,300 uM Pyr 100 uM Kyn,F,1900,1.9,Pyruvate and Kyn,N
+C5,2,0 uM Pyr 50 uM Kyn,B,500,0.5,Kyn,N
+C6,9,600 uM Pyr 100 uM Kyn,I,2800,2.8,Pyruvate and Kyn,N
+C7,4,300 uM Pyr 0 uM Kyn  ,D,900,0.9,Pyruvate,N
+C8,7,300 uM Pyr 0 uM Kyn trace HCl,G,900,0.9,Pyruvate,Y
+C9,1,0 uM Pyr 0 uM Kyn,A,0,0,NA,N
+C10,10,900 uM Pyr 0 uM Kyn,J,2700,2.7,Pyruvate,N
+C11,3,150 uM Pyr 0 uM Kyn,C,450,0.45,Pyruvate,N
+C12,0,Media blank,x,0,0,NA,N
+D1,0,Media blank,x,0,0,NA,N
+D2,4,300 uM Pyr 0 uM Kyn  ,D,900,0.9,Pyruvate,N
+D3,2,0 uM Pyr 50 uM Kyn,B,500,0.5,Kyn,N
+D4,10,900 uM Pyr 0 uM Kyn,J,2700,2.7,Pyruvate,N
+D5,7,300 uM Pyr 0 uM Kyn trace HCl,G,900,0.9,Pyruvate,Y
+D6,1,0 uM Pyr 0 uM Kyn,A,0,0,NA,N
+D7,3,150 uM Pyr 0 uM Kyn,C,450,0.45,Pyruvate,N
+D8,5,0 uM Pyr 100 uM Kyn,E,1000,1,Kyn,N
+D9,8,600 uM Pyr 0 uM Kyn,H,1800,1.8,Pyruvate,N
+D10,6,300 uM Pyr 100 uM Kyn,F,1900,1.9,Pyruvate and Kyn,N
+D11,9,600 uM Pyr 100 uM Kyn,I,2800,2.8,Pyruvate and Kyn,N
+D12,0,Media blank,x,0,0,NA,N
+E1,0,Media blank,x,0,0,NA,N
+E2,7,300 uM Pyr 0 uM Kyn trace HCl,G,900,0.9,Pyruvate,Y
+E3,9,600 uM Pyr 100 uM Kyn,I,2800,2.8,Pyruvate and Kyn,N
+E4,8,600 uM Pyr 0 uM Kyn,H,1800,1.8,Pyruvate,N
+E5,4,300 uM Pyr 0 uM Kyn  ,D,900,0.9,Pyruvate,N
+E6,3,150 uM Pyr 0 uM Kyn,C,450,0.45,Pyruvate,N
+E7,6,300 uM Pyr 100 uM Kyn,F,1900,1.9,Pyruvate and Kyn,N
+E8,10,900 uM Pyr 0 uM Kyn,J,2700,2.7,Pyruvate,N
+E9,2,0 uM Pyr 50 uM Kyn,B,500,0.5,Kyn,N
+E10,1,0 uM Pyr 0 uM Kyn,A,0,0,NA,N
+E11,5,0 uM Pyr 100 uM Kyn,E,1000,1,Kyn,N
+E12,0,Media blank,x,0,0,NA,N
+F1,0,Media blank,x,0,0,NA,N
+F2,5,0 uM Pyr 100 uM Kyn,E,1000,1,Kyn,N
+F3,3,150 uM Pyr 0 uM Kyn,C,450,0.45,Pyruvate,N
+F4,1,0 uM Pyr 0 uM Kyn,A,0,0,NA,N
+F5,6,300 uM Pyr 100 uM Kyn,F,1900,1.9,Pyruvate and Kyn,N
+F6,10,900 uM Pyr 0 uM Kyn,J,2700,2.7,Pyruvate,N
+F7,2,0 uM Pyr 50 uM Kyn,B,500,0.5,Kyn,N
+F8,8,600 uM Pyr 0 uM Kyn,H,1800,1.8,Pyruvate,N
+F9,4,300 uM Pyr 0 uM Kyn  ,D,900,0.9,Pyruvate,N
+F10,9,600 uM Pyr 100 uM Kyn,I,2800,2.8,Pyruvate and Kyn,N
+F11,7,300 uM Pyr 0 uM Kyn trace HCl,G,900,0.9,Pyruvate,Y
+F12,0,Media blank,x,0,0,NA,N
+G1,0,Media blank,x,0,0,NA,N
+G2,9,600 uM Pyr 100 uM Kyn,I,2800,2.8,Pyruvate and Kyn,N
+G3,8,600 uM Pyr 0 uM Kyn,H,1800,1.8,Pyruvate,N
+G4,4,300 uM Pyr 0 uM Kyn  ,D,900,0.9,Pyruvate,N
+G5,5,0 uM Pyr 100 uM Kyn,E,1000,1,Kyn,N
+G6,7,300 uM Pyr 0 uM Kyn trace HCl,G,900,0.9,Pyruvate,Y
+G7,10,900 uM Pyr 0 uM Kyn,J,2700,2.7,Pyruvate,N
+G8,1,0 uM Pyr 0 uM Kyn,A,0,0,NA,N
+G9,6,300 uM Pyr 100 uM Kyn,F,1900,1.9,Pyruvate and Kyn,N
+G10,3,150 uM Pyr 0 uM Kyn,C,450,0.45,Pyruvate,N
+G11,2,0 uM Pyr 50 uM Kyn,B,500,0.5,Kyn,N
+G12,0,Media blank,x,0,0,NA,N
+H1,0,Media blank,x,0,0,NA,N
+H2,0,Media blank,x,0,0,NA,N
+H3,0,Media blank,x,0,0,NA,N
+H4,0,Media blank,x,0,0,NA,N
+H5,0,Media blank,x,0,0,NA,N
+H6,0,Media blank,x,0,0,NA,N
+H7,0,Media blank,x,0,0,NA,N
+H8,0,Media blank,x,0,0,NA,N
+H9,0,Media blank,x,0,0,NA,N
+H10,0,Media blank,x,0,0,NA,N
+H11,0,Media blank,x,0,0,NA,N
+H12,0,Media blank,x,0,0,NA,N

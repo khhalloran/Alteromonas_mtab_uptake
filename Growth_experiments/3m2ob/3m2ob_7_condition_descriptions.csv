@@ -1,0 +1,49 @@
+well,Condition number,Condition,Condition name,Total_uM_C,Total_mM_C,Carbon_source,Diauxic
+B2,4,D,300 uM Pyr 0 uM 3m2ob,900,0.9,Pyruvate,N
+B4,5,E,300 uM Pyr 180 uM 3m2ob,1800,1.8,Pyruvate and 3m2ob,Y
+B5,3,C,0 uM Pyr 180 uM 3m2ob,900,0.9,3m2ob,N
+B6,7,G,600 uM Pyr 180 uM 3m2ob,2700,2.7,Pyruvate and 3m2ob,Y
+B8,8,H,900 uM Pyr 0 uM 3m2ob,2700,2.7,Pyruvate,N
+B9,1,A,0 uM Pyr 0 uM 3m2ob,0,0,NA,N
+B10,6,F,600 uM Pyr 0 uM 3m2ob,1800,1.8,Pyruvate,N
+B11,2,B,0 uM Pyr 90 uM 3m2ob,450,0.45,3m2ob,N
+C2,5,E,300 uM Pyr 180 uM 3m2ob,1800,1.8,Pyruvate and 3m2ob,Y
+C3,6,F,600 uM Pyr 0 uM 3m2ob,1800,1.8,Pyruvate,N
+C4,3,C,0 uM Pyr 180 uM 3m2ob,900,0.9,3m2ob,N
+C6,1,A,0 uM Pyr 0 uM 3m2ob,0,0,NA,N
+C7,7,G,600 uM Pyr 180 uM 3m2ob,2700,2.7,Pyruvate and 3m2ob,Y
+C9,4,D,300 uM Pyr 0 uM 3m2ob,900,0.9,Pyruvate,N
+C10,2,B,0 uM Pyr 90 uM 3m2ob,450,0.45,3m2ob,N
+C11,8,H,900 uM Pyr 0 uM 3m2ob,2700,2.7,Pyruvate,N
+D2,8,H,900 uM Pyr 0 uM 3m2ob,2700,2.7,Pyruvate,N
+D3,3,C,0 uM Pyr 180 uM 3m2ob,900,0.9,3m2ob,N
+D5,6,F,600 uM Pyr 0 uM 3m2ob,1800,1.8,Pyruvate,N
+D6,2,B,0 uM Pyr 90 uM 3m2ob,450,0.45,3m2ob,N
+D7,1,A,0 uM Pyr 0 uM 3m2ob,0,0,NA,N
+D8,7,G,600 uM Pyr 180 uM 3m2ob,2700,2.7,Pyruvate and 3m2ob,Y
+D9,5,E,300 uM Pyr 180 uM 3m2ob,1800,1.8,Pyruvate and 3m2ob,Y
+D11,4,D,300 uM Pyr 0 uM 3m2ob,900,0.9,Pyruvate,N
+E3,1,A,0 uM Pyr 0 uM 3m2ob,0,0,NA,N
+E4,6,F,600 uM Pyr 0 uM 3m2ob,1800,1.8,Pyruvate,N
+E5,8,H,900 uM Pyr 0 uM 3m2ob,2700,2.7,Pyruvate,N
+E6,4,D,300 uM Pyr 0 uM 3m2ob,900,0.9,Pyruvate,N
+E7,3,C,0 uM Pyr 180 uM 3m2ob,900,0.9,3m2ob,N
+E8,2,B,0 uM Pyr 90 uM 3m2ob,450,0.45,3m2ob,N
+E10,7,G,600 uM Pyr 180 uM 3m2ob,2700,2.7,Pyruvate and 3m2ob,Y
+E11,5,E,300 uM Pyr 180 uM 3m2ob,1800,1.8,Pyruvate and 3m2ob,Y
+F2,6,F,600 uM Pyr 0 uM 3m2ob,1800,1.8,Pyruvate,N
+F3,5,E,300 uM Pyr 180 uM 3m2ob,1800,1.8,Pyruvate and 3m2ob,Y
+F4,2,B,0 uM Pyr 90 uM 3m2ob,450,0.45,3m2ob,N
+F6,8,H,900 uM Pyr 0 uM 3m2ob,2700,2.7,Pyruvate,N
+F7,4,D,300 uM Pyr 0 uM 3m2ob,900,0.9,Pyruvate,N
+F8,1,A,0 uM Pyr 0 uM 3m2ob,0,0,NA,N
+F9,7,G,600 uM Pyr 180 uM 3m2ob,2700,2.7,Pyruvate and 3m2ob,Y
+F11,3,C,0 uM Pyr 180 uM 3m2ob,900,0.9,3m2ob,N
+G2,1,A,0 uM Pyr 0 uM 3m2ob,0,0,NA,N
+G3,8,H,900 uM Pyr 0 uM 3m2ob,2700,2.7,Pyruvate,N
+G4,7,G,600 uM Pyr 180 uM 3m2ob,2700,2.7,Pyruvate and 3m2ob,Y
+G5,4,D,300 uM Pyr 0 uM 3m2ob,900,0.9,Pyruvate,N
+G7,5,E,300 uM Pyr 180 uM 3m2ob,1800,1.8,Pyruvate and 3m2ob,Y
+G8,3,C,0 uM Pyr 180 uM 3m2ob,900,0.9,3m2ob,N
+G9,2,B,0 uM Pyr 90 uM 3m2ob,450,0.45,3m2ob,N
+G10,6,F,600 uM Pyr 0 uM 3m2ob,1800,1.8,Pyruvate,N

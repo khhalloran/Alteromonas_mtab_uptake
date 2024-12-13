@@ -1,0 +1,49 @@
+﻿well,Condition number,Condition,Condition name,Total_uM_C,Total_mM_C,Carbon_source,Diauxic
+B3,6,F,600 uM Pyr 0 uM Ile,1800,1.8,Pyruvate,N
+B4,1,A,0 uM Pyr 0 uM Ile,0,0,NA,N
+B5,5,E,300 uM Pyr 150 uM Ile,1800,1.8,Pyruvate and Ile,Y
+B7,8,H,900 uM Pyr,2700,2.7,Pyruvate,N
+B8,4,D,300 uM Pyr 0 uM Ile,900,0.9,Pyruvate,N
+B9,7,G,600 uM Pyr 150 uM Ile,2700,2.7,Pyruvate and Ile,Y
+B10,2,B,0 uM Pyr75 uM Ile,450,0.45,Ile,N
+C2,2,B,0 uM Pyr75 uM Ile,450,0.45,Ile,N
+C3,4,D,300 uM Pyr 0 uM Ile,900,0.9,Pyruvate,N
+C5,6,F,600 uM Pyr 0 uM Ile,1800,1.8,Pyruvate,N
+C6,1,A,0 uM Pyr 0 uM Ile,0,0,NA,N
+C8,7,G,600 uM Pyr 150 uM Ile,2700,2.7,Pyruvate and Ile,Y
+C10,8,H,900 uM Pyr,2700,2.7,Pyruvate,N
+C11,5,E,300 uM Pyr 150 uM Ile,1800,1.8,Pyruvate and Ile,Y
+D2,6,F,600 uM Pyr 0 uM Ile,1800,1.8,Pyruvate,N
+D3,7,G,600 uM Pyr 150 uM Ile,2700,2.7,Pyruvate and Ile,Y
+D4,5,E,300 uM Pyr 150 uM Ile,1800,1.8,Pyruvate and Ile,Y
+D6,4,D,300 uM Pyr 0 uM Ile,900,0.9,Pyruvate,N
+D7,2,B,0 uM Pyr75 uM Ile,450,0.45,Ile,N
+D8,1,A,0 uM Pyr 0 uM Ile,0,0,NA,N
+D9,8,H,900 uM Pyr,2700,2.7,Pyruvate,N
+D11,3,C,0 uM Pyr 150 uM Ile,900,0.9,Ile,N
+E2,4,D,300 uM Pyr 0 uM Ile,900,0.9,Pyruvate,N
+E4,6,F,600 uM Pyr 0 uM Ile,1800,1.8,Pyruvate,N
+E5,1,A,0 uM Pyr 0 uM Ile,0,0,NA,N
+E6,8,H,900 uM Pyr,2700,2.7,Pyruvate,N
+E7,3,C,0 uM Pyr 150 uM Ile,900,0.9,Ile,N
+E9,2,B,0 uM Pyr75 uM Ile,450,0.45,Ile,N
+E10,5,E,300 uM Pyr 150 uM Ile,1800,1.8,Pyruvate and Ile,Y
+E11,7,G,600 uM Pyr 150 uM Ile,2700,2.7,Pyruvate and Ile,Y
+F2,8,H,900 uM Pyr,2700,2.7,Pyruvate,N
+F3,2,B,0 uM Pyr75 uM Ile,450,0.45,Ile,N
+F5,7,G,600 uM Pyr 150 uM Ile,2700,2.7,Pyruvate and Ile,Y
+F7,6,F,600 uM Pyr 0 uM Ile,1800,1.8,Pyruvate,N
+F8,3,C,0 uM Pyr 150 uM Ile,900,0.9,Ile,N
+F9,5,E,300 uM Pyr 150 uM Ile,1800,1.8,Pyruvate and Ile,Y
+F10,4,D,300 uM Pyr 0 uM Ile,900,0.9,Pyruvate,N
+F11,1,A,0 uM Pyr 0 uM Ile,0,0,NA,N
+G3,5,E,300 uM Pyr 150 uM Ile,1800,1.8,Pyruvate and Ile,Y
+G4,8,H,900 uM Pyr,2700,2.7,Pyruvate,N
+G5,2,B,0 uM Pyr75 uM Ile,450,0.45,Ile,N
+G6,7,G,600 uM Pyr 150 uM Ile,2700,2.7,Pyruvate and Ile,Y
+G7,4,D,300 uM Pyr 0 uM Ile,900,0.9,Pyruvate,N
+G8,6,F,600 uM Pyr 0 uM Ile,1800,1.8,Pyruvate,N
+G10,3,C,0 uM Pyr 150 uM Ile,900,0.9,Ile,N
+B6,3,C,0 uM Pyr 150 uM Ile,900,0.9,Ile,N
+C4,3,C,0 uM Pyr 150 uM Ile,900,0.9,Ile,N
+G9,1,A,0 uM Pyr 0 uM Ile,0,0,NA,N

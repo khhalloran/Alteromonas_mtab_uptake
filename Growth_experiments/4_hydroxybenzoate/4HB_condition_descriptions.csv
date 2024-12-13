@@ -1,0 +1,97 @@
+well,Condition number,Condition,Condition name,Total_uM_C,Total_mM_C,Carbon_source,MeOH
+A1,0,x,Media blank,0,0,NA,N
+A2,0,x,Media blank,0,0,NA,N
+A3,0,x,Media blank,0,0,NA,N
+A4,0,x,Media blank,0,0,NA,N
+A5,0,x,Media blank,0,0,NA,N
+A6,0,x,Media blank,0,0,NA,N
+A7,0,x,Media blank,0,0,NA,N
+A8,0,x,Media blank,0,0,NA,N
+A9,0,x,Media blank,0,0,NA,N
+A10,0,x,Media blank,0,0,NA,N
+A11,0,x,Media blank,0,0,NA,N
+A12,0,x,Media blank,0,0,NA,N
+B1,0,x,Media blank,0,0,NA,N
+B2,2,B,0 uM Pyr 64 uM 4-HOBzOH,450,0.45,4HB,N
+B3,4,D,300 uM Pyr 0 uM 4-HOBzOH,900,0.9,Pyruvate,N
+B4,7,G,600 uM Pyr 0 uM 4-HOBzOH,1800,1.8,Pyruvate,N
+B5,10,J,900 uM Pyr 0 uM 4-HOBzOH,2700,2.7,Pyruvate,N
+B6,1,A,0 uM Pyr 0 uM 4-HOBzOH,0,0,NA,N
+B7,8,H,600 uM Pyr 128 uM 4-HOBzOH,2700,2.7,Pyruvate and 4HB,N
+B8,5,E,300 uM Pyr 0 uM 4-HOBzOH trace MeOH,900,0.9,Pyruvate,Y
+B9,3,C,0 uM Pyr 128 uM 4-HOBzOH,900,0.9,4HB,N
+B10,9,I,600 uM Pyr 0 uM 4-HOBzOH trace MeOH,1800,1.8,Pyruvate,Y
+B11,6,F,300 uM Pyr 128 uM 4-HOBzOH,1800,1.8,Pyruvate and 4HB,N
+B12,0,x,Media blank,0,0,NA,N
+C1,0,x,Media blank,0,0,NA,N
+C2,8,H,600 uM Pyr 128 uM 4-HOBzOH,2700,2.7,Pyruvate and 4HB,N
+C3,3,C,0 uM Pyr 128 uM 4-HOBzOH,900,0.9,4HB,N
+C4,9,I,600 uM Pyr 0 uM 4-HOBzOH trace MeOH,1800,1.8,Pyruvate,Y
+C5,2,B,0 uM Pyr 64 uM 4-HOBzOH,450,0.45,4HB,N
+C6,5,E,300 uM Pyr 0 uM 4-HOBzOH trace MeOH,900,0.9,Pyruvate,Y
+C7,10,J,900 uM Pyr 0 uM 4-HOBzOH,2700,2.7,Pyruvate,N
+C8,6,F,300 uM Pyr 128 uM 4-HOBzOH,1800,1.8,Pyruvate and 4HB,N
+C9,7,G,600 uM Pyr 0 uM 4-HOBzOH,1800,1.8,Pyruvate,N
+C10,1,A,0 uM Pyr 0 uM 4-HOBzOH,0,0,NA,N
+C11,4,D,300 uM Pyr 0 uM 4-HOBzOH,900,0.9,Pyruvate,N
+C12,0,x,Media blank,0,0,NA,N
+D1,0,x,Media blank,0,0,NA,N
+D2,5,E,300 uM Pyr 0 uM 4-HOBzOH trace MeOH,900,0.9,Pyruvate,Y
+D3,7,G,600 uM Pyr 0 uM 4-HOBzOH,1800,1.8,Pyruvate,N
+D4,1,A,0 uM Pyr 0 uM 4-HOBzOH,0,0,NA,N
+D5,6,F,300 uM Pyr 128 uM 4-HOBzOH,1800,1.8,Pyruvate and 4HB,N
+D6,4,D,300 uM Pyr 0 uM 4-HOBzOH,900,0.9,Pyruvate,N
+D7,3,C,0 uM Pyr 128 uM 4-HOBzOH,900,0.9,4HB,N
+D8,9,I,600 uM Pyr 0 uM 4-HOBzOH trace MeOH,1800,1.8,Pyruvate,Y
+D9,2,B,0 uM Pyr 64 uM 4-HOBzOH,450,0.45,4HB,N
+D10,10,J,900 uM Pyr 0 uM 4-HOBzOH,2700,2.7,Pyruvate,N
+D11,8,H,600 uM Pyr 128 uM 4-HOBzOH,2700,2.7,Pyruvate and 4HB,N
+D12,0,x,Media blank,0,0,NA,N
+E1,0,x,Media blank,0,0,NA,N
+E2,9,I,600 uM Pyr 0 uM 4-HOBzOH trace MeOH,1800,1.8,Pyruvate,Y
+E3,8,H,600 uM Pyr 128 uM 4-HOBzOH,2700,2.7,Pyruvate and 4HB,N
+E4,2,B,0 uM Pyr 64 uM 4-HOBzOH,450,0.45,4HB,N
+E5,10,J,900 uM Pyr 0 uM 4-HOBzOH,2700,2.7,Pyruvate,N
+E6,6,F,300 uM Pyr 128 uM 4-HOBzOH,1800,1.8,Pyruvate and 4HB,N
+E7,7,G,600 uM Pyr 0 uM 4-HOBzOH,1800,1.8,Pyruvate,N
+E8,1,A,0 uM Pyr 0 uM 4-HOBzOH,0,0,NA,N
+E9,4,D,300 uM Pyr 0 uM 4-HOBzOH,900,0.9,Pyruvate,N
+E10,5,E,300 uM Pyr 0 uM 4-HOBzOH trace MeOH,900,0.9,Pyruvate,Y
+E11,3,C,0 uM Pyr 128 uM 4-HOBzOH,900,0.9,4HB,N
+E12,0,x,Media blank,0,0,NA,N
+F1,0,x,Media blank,0,0,NA,N
+F2,1,A,0 uM Pyr 0 uM 4-HOBzOH,0,0,NA,N
+F3,9,I,600 uM Pyr 0 uM 4-HOBzOH trace MeOH,1800,1.8,Pyruvate,Y
+F4,3,C,0 uM Pyr 128 uM 4-HOBzOH,900,0.9,4HB,N
+F5,4,D,300 uM Pyr 0 uM 4-HOBzOH,900,0.9,Pyruvate,N
+F6,8,H,600 uM Pyr 128 uM 4-HOBzOH,2700,2.7,Pyruvate and 4HB,N
+F7,5,E,300 uM Pyr 0 uM 4-HOBzOH trace MeOH,900,0.9,Pyruvate,Y
+F8,10,J,900 uM Pyr 0 uM 4-HOBzOH,2700,2.7,Pyruvate,N
+F9,6,F,300 uM Pyr 128 uM 4-HOBzOH,1800,1.8,Pyruvate and 4HB,N
+F10,2,B,0 uM Pyr 64 uM 4-HOBzOH,450,0.45,4HB,N
+F11,7,G,600 uM Pyr 0 uM 4-HOBzOH,1800,1.8,Pyruvate,N
+F12,0,x,Media blank,0,0,NA,N
+G1,0,x,Media blank,0,0,NA,N
+G2,3,C,0 uM Pyr 128 uM 4-HOBzOH,900,0.9,4HB,N
+G3,6,F,300 uM Pyr 128 uM 4-HOBzOH,1800,1.8,Pyruvate and 4HB,N
+G4,5,E,300 uM Pyr 0 uM 4-HOBzOH trace MeOH,900,0.9,Pyruvate,Y
+G5,9,I,600 uM Pyr 0 uM 4-HOBzOH trace MeOH,1800,1.8,Pyruvate,Y
+G6,2,B,0 uM Pyr 64 uM 4-HOBzOH,450,0.45,4HB,N
+G7,1,A,0 uM Pyr 0 uM 4-HOBzOH,0,0,NA,N
+G8,7,G,600 uM Pyr 0 uM 4-HOBzOH,1800,1.8,Pyruvate,N
+G9,8,H,600 uM Pyr 128 uM 4-HOBzOH,2700,2.7,Pyruvate and 4HB,N
+G10,4,D,300 uM Pyr 0 uM 4-HOBzOH,900,0.9,Pyruvate,N
+G11,10,J,900 uM Pyr 0 uM 4-HOBzOH,2700,2.7,Pyruvate,N
+G12,0,x,Media blank,0,0,NA,N
+H1,0,x,Media blank,0,0,NA,N
+H2,0,x,Media blank,0,0,NA,N
+H3,0,x,Media blank,0,0,NA,N
+H4,0,x,Media blank,0,0,NA,N
+H5,0,x,Media blank,0,0,NA,N
+H6,0,x,Media blank,0,0,NA,N
+H7,0,x,Media blank,0,0,NA,N
+H8,0,x,Media blank,0,0,NA,N
+H9,0,x,Media blank,0,0,NA,N
+H10,0,x,Media blank,0,0,NA,N
+H11,0,x,Media blank,0,0,NA,N
+H12,0,x,Media blank,0,0,NA,N

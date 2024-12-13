@@ -1,0 +1,343 @@
+---
+title: "Ile_Alteromonas_growth"
+author: "KHH"
+date: "4/10/2024"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Goals
+
+Analyze growth of Alteromonas macleodii on isoleucine ± pyruvate. 
+
+In this analysis we tested different ways of dealing with edge effects, which impacted the growth of Alteromonas grown on the outside edges of 96-well plates. We found that simply removing wells from the two rows/columns around the outside of the plate resulted in an insufficient sample size. Instead, we blank corrected, plotted wells individually within a culture condition, and removed edge rows/columns with wells which showed evidence of edge effects. Edge effects typically appeared as cultures which "crashed" immediately after reaching their max OD600, rather than entering stationary phase. 
+
+We next blank corrected, plotted data, found the carrying capacity for each culture, and statistically compared carrying capacities between culture conditions. 
+
+#Get likely required packages and functions
+
+
+```{r get packages}
+#for data management and plotting
+require(tidyverse)
+
+#some useful color palettes 
+require(ggsci)
+require(pals)
+require(PaletteWoodsHole)
+```
+
+
+```{r get summary function}
+## Summarizes data.
+## Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 95%).
+##   data: a data frame.
+##   measurevar: the name of a column that contains the variable to be summariezed
+##   groupvars: a vector containing names of columns that contain grouping variables
+##   na.rm: a boolean that indicates whether to ignore NA's
+##   conf.interval: the percent range of the confidence interval (default is 95%)
+summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
+                      conf.interval=.95, .drop=TRUE) {
+    library(plyr)
+
+    # New version of length which can handle NA's: if na.rm==T, don't count them
+    length2 <- function (x, na.rm=FALSE) {
+        if (na.rm) sum(!is.na(x))
+        else       length(x)
+    }
+
+    # This does the summary. For each group's data frame, return a vector with
+    # N, mean, and sd
+    datac <- ddply(data, groupvars, .drop=.drop,
+      .fun = function(xx, col) {
+        c(N    = length2(xx[[col]], na.rm=na.rm),
+          mean = mean   (xx[[col]], na.rm=na.rm),
+          sd   = sd     (xx[[col]], na.rm=na.rm)
+        )
+      },
+      measurevar
+    )
+
+    # Rename the "mean" column    
+    datac <- rename(datac, c("mean" = measurevar))
+
+    datac$se <- datac$sd / sqrt(datac$N)  # Calculate standard error of the mean
+
+    # Confidence interval multiplier for standard error
+    # Calculate t-statistic for confidence interval: 
+    # e.g., if conf.interval is .95, use .975 (above/below), and use df=N-1
+    ciMult <- qt(conf.interval/2 + .5, datac$N-1)
+    datac$ci <- datac$se * ciMult
+
+    return(datac)
+}
+
+#example use:
+#d_summary_name <- summarySE(d_example, measurevar = "variable to summarize", groupvars = c("group by this", "group by that"))
+```
+
+
+```{r}
+##Set your path for saving plots
+path_for_saving_plots <- "~/Documents/MIT_WHOI_JP/Kuj:Chisholm data/Growth curves/04.2024_reanalysis/isoleucine/Figures/"
+
+  
+##Set your metabolite name
+mtab_full_name <- "isoleucine"
+mtab_short_name <- "Ile"
+
+```
+
+
+```{r define a function to save plots}
+save_plots <- function(p, filename, path){
+  ggsave(filename = filename, path = path, plot = p, device = "pdf", dpi = "retina", bg = "transparent")
+}
+```
+
+
+## Get data
+
+This analysis requires two dataframes: the OD600 data pulled from the plate reader, and a spreadsheet that describes culture condition by well position. 
+
+```{r get data into R and rearrange}
+#Edit the paths below to get to 1. raw OD600 data and 2. a data table that contains condition descriptions. That condition description file should include the following column headers: well, Condition.number, Condition, Condition.name, Total_uM_C, Total_mM_C, Carbon_source, Diauxic. 
+
+OD600_data <- "~/Documents/MIT_WHOI_JP/Kuj:Chisholm data/Growth curves/Metabolite addition/Ile/KHH01_111_isoleucine_forR.csv"
+
+culture_condition_data <- "~/Documents/MIT_WHOI_JP/Kuj:Chisholm data/Growth curves/Metabolite addition/Ile/Ile_condition_descriptions.csv"
+
+#Now get those data into R and into useful formats
+
+d_OD600 <- read.table(OD600_data, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+d_culture_conditions <- read.table(culture_condition_data, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+
+d_OD600_long <- gather(d_OD600, key = "well", value = "OD600", "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12", "E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9", "E10", "E11", "E12", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G11", "G12", "H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9", "H10", "H11", "H12")
+
+d_gc <- full_join(d_OD600_long, d_culture_conditions, by = "well")
+```
+
+Our experimental design included a lower concentration metabolite addition, but we decided it did not contribute to our understanding of Alteromonas metabolite uptake, and so that condition was not considered in the manuscript. 
+
+```{r filter out the lowest C metabolite condition}
+d_gc <- d_gc %>% 
+  filter(Total_mM_C != 0.45) #%>%
+  #filter out border wells
+  #filter(Condition != "x") %>%
+  #filter out media blanks
+  #filter(Diauxic != "NA")
+```
+
+
+#Do a blank correction
+
+```{r make dataframe for data from blanks}
+d_blank_OD600 <- filter(d_gc, Condition == "A")
+```
+
+```{r Calculate average blank OD600 at each timepoint}
+d_summary_blank_OD600 <- summarySE(d_blank_OD600, measurevar = "OD600", groupvars = c("time"))
+```
+
+```{r add average blank values back into main dataframe and calc corrected OD600}
+d_summary_blank_OD600 <- dplyr::rename(d_summary_blank_OD600, "blank_OD600" = "OD600")
+d_summary_blank_OD600 <- dplyr::select(d_summary_blank_OD600, "time", "blank_OD600")
+d_gc_blank_corr <- full_join(d_gc, d_summary_blank_OD600, by = "time")
+d_gc_blank_corr$OD600_corr <- d_gc_blank_corr$OD600 - d_gc_blank_corr$blank_OD600
+```
+
+This correction gives occasional very small negative numbers, which is spurious - so I'll set those negative numbers to zero
+
+```{r blank corr OD600 neg to zero}
+d_gc_blank_corr_no_neg <- d_gc_blank_corr
+d_gc_blank_corr_no_neg[(d_gc_blank_corr_no_neg$OD600_corr < 0), "OD600_corr"] <- 0
+```
+
+#Look at individually plotted wells
+
+```{r}
+p <- ggplot(data = d_gc_blank_corr_no_neg, aes(x = time, y = OD600_corr, color = Condition.name, fill = Condition.name))
+
+p + geom_point(size = 2)
+```
+
+```{r}
+p <- ggplot(data = filter(d_gc_blank_corr_no_neg, Condition.name == "900 uM Pyr"), aes(x = time, y = OD600_corr, color = well, fill = well))
+
+p + geom_point(size = 2)
+
+#F2 takes a weird jump and G4 crashes (though not super early) 
+```
+
+```{r}
+p <- ggplot(data = filter(d_gc_blank_corr_no_neg, Condition.name == "600 uM Pyr 0 uM Ile"), aes(x = time, y = OD600_corr, color = well, fill = well))
+
+p + geom_point(size = 2)
+
+#B3 and D2 crash, and G8 has a delayed crash
+```
+
+```{r}
+p <- ggplot(data = filter(d_gc_blank_corr_no_neg, Condition.name == "600 uM Pyr 150 uM Ile"), aes(x = time, y = OD600_corr, color = well, fill = well))
+
+p + geom_point(size = 2)
+
+#E11 a little crashy
+```
+
+```{r}
+p <- ggplot(data = filter(d_gc_blank_corr_no_neg, Condition.name == "300 uM Pyr 0 uM Ile"), aes(x = time, y = OD600_corr, color = well, fill = well))
+
+p + geom_point(size = 2)
+
+#E2 crashy, B8 kinda weird in this condition
+```
+
+```{r}
+p <- ggplot(data = filter(d_gc_blank_corr_no_neg, Condition.name == "300 uM Pyr 150 uM Ile"), aes(x = time, y = OD600_corr, color = well, fill = well))
+
+p + geom_point(size = 2)
+
+#C11 and G3 crashy. B5 kinda weird but not exactly crashy
+```
+
+```{r}
+p <- ggplot(data = filter(d_gc_blank_corr_no_neg, Condition.name == "0 uM Pyr 150 uM Ile"), aes(x = time, y = OD600_corr, color = well, fill = well))
+
+p + geom_point(size = 2)
+
+#B6 very weird in this condition. G10 and D11 not great
+```
+
+#Remove edge effect-y columns
+Removing all of B, G, 2, 11, still leaves me three replicates per condition - woo! I'm gonna do that. 
+
+```{r remove crashy rows and columns}
+d_gc_blank_corr_no_neg <- d_gc_blank_corr_no_neg %>%
+  separate(col = well, 
+           into = c("row", "column"),
+           sep = 1,
+           remove = FALSE) %>%
+  filter(column != "2") %>%
+  filter(column != "11") %>%
+  filter(row != "B") %>%
+  filter(row != "G")
+```
+
+
+#Plot growth curves
+
+```{r generate summary data for plotting gc}
+d_gc_corr_summary <- summarySE(data = d_gc_blank_corr_no_neg, measurevar = "OD600_corr", groupvars = c("time", "Condition"))
+```
+
+
+```{r plot growth curve mean ± SD}
+p <- ggplot(data = d_gc_corr_summary, aes(x = time, y = OD600_corr, ymin = OD600_corr - sd, ymax = OD600_corr + sd, group = factor(Condition), color = factor(Condition), fill = factor(Condition), shape = factor(Condition)))
+
+p <- p + geom_point(size = 2) + geom_errorbar() + 
+  scale_color_manual(
+    name = "Experimental Condition", 
+    breaks = c("H", "G", "F", "E", "D", "C", "B", "A"),
+    labels = c("2.7 mM C", "2.7 mM C (33% metabolite)", "1.8 mM C", "1.8 mM C (50% metabolite)", "0.90 mM C", "0.90 mM C (100% metabolite)", "0.45 mM C (100% metabolite)", "0 mM C"),
+    values = c("#084594", "#4a1486", "#4292c6", "#807dba", "#9ecae1", "firebrick4", "#d73027", "gray70")) +
+  scale_fill_manual(
+    name = "Experimental Condition", 
+    breaks = c("H", "G", "F", "E", "D", "C", "B", "A"),
+    labels = c("2.7 mM C", "2.7 mM C (33% metabolite)", "1.8 mM C", "1.8 mM C (50% metabolite)", "0.90 mM C", "0.90 mM C (100% metabolite)", "0.45 mM C (100% metabolite)", "0 mM C"),
+    values = c("#084594", "#4a1486", "#4292c6", "#807dba", "#9ecae1", "firebrick4", "#d73027", "gray70")) +
+  scale_shape_manual(
+    name = "Experimental Condition", 
+    breaks = c("H", "G", "F", "E", "D", "C", "B", "A"),
+    labels = c("2.7 mM C", "2.7 mM C (33% metabolite)", "1.8 mM C", "1.8 mM C (50% metabolite)", "0.90 mM C", "0.90 mM C (100% metabolite)", "0.45 mM C (100% metabolite)", "0 mM C"),
+    values = c(24, 2, 23, 5, 22, 0, 1, 4)) + 
+  theme_classic() + 
+  xlab("Time (hrs)") + 
+  ylab(bquote('OD'[600])) + 
+  ggtitle(mtab_full_name) +
+  theme(text = element_text(size = 16))
+
+save_plots(p, "Ile_corrected_gc.pdf", path_for_saving_plots)
+
+p <- p + theme(legend.position =  "none")
+
+save_plots(p, "Ile_corrected_gc_noLegend.pdf", path_for_saving_plots)
+```
+
+#Iterate through wells and find the overall carrying capacity (max - min OD600)
+
+```{r calculate carrying capacity}
+#Set myself up for storing well calculations
+well_index <- unique(d_gc_blank_corr_no_neg[c("well")])
+
+d_gc_blank_corr_no_neg$minOD <- as.numeric(NA)
+d_gc_blank_corr_no_neg$maxOD <- as.numeric(NA)
+
+d_gc_capacityParams <- d_gc_blank_corr_no_neg %>%
+  filter(well == "A")
+
+#Find min and max OD600 in each well
+for(i in well_index$well){
+  d_temp <- d_gc_blank_corr_no_neg %>%
+    filter(well == i)
+  
+  #find and add in min and max OD600
+  minOD <- min(d_temp$OD600_corr)
+  maxOD <- max(d_temp$OD600_corr)
+  
+  d_temp$minOD <- minOD
+  d_temp$maxOD <- maxOD
+  
+  #bind values in
+  d_gc_capacityParams <- rbind(d_gc_capacityParams, d_temp)
+}
+
+#Calculate carrying capacity
+d_gc_capacityParams$K_overall <- d_gc_capacityParams$maxOD - d_gc_capacityParams$minOD
+
+```
+
+#Plot and test significance of condition on carrying capacity
+
+```{r filter to one row per well}
+#capacity parameters aren't changing with time, only need to represent those parameters once per well
+d_capacity <- d_gc_capacityParams %>%
+  filter(time == 0)
+```
+
+
+```{r test significance of condition on K_overall}
+s_anova_K_overall <- aov(data = d_capacity, K_overall ~ Condition.name)
+summary(s_anova_K_overall)
+```
+
+```{r post-hoc test}
+TukeyHSD(s_anova_K_overall)
+```
+
+Condition does have a significant effect on carrying capacity. There is no significant difference between 600 µM pyr ± Ile
+
+
+```{r plot K by condition}
+p <- ggplot(data = d_capacity, aes(x = Condition.name, y = K_overall, color = Carbon_source))
+
+p <- p + 
+  geom_boxplot() + 
+  geom_point() + 
+   scale_color_manual(
+     name = "Carbon source",
+     breaks = c("Ile", "Pyruvate", "Pyruvate and Ile", "None"),
+     labels = c(mtab_full_name, "Pyruvate", "Mix", "No carbon added"),
+     values = c("firebrick", "#084594", "#4a1486", "gray")) + 
+  theme_classic(base_size = 16)
+
+save_plots(p, "Ile_K_byCondition_boxplot_and_points.pdf", path_for_saving_plots)
+
+p <- p + theme(legend.position = "none")
+
+save_plots(p, "Ile_K_byCondition_boxplot_and_points_noLegend.pdf", path_for_saving_plots)
+```
+

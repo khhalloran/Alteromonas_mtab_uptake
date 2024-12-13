@@ -1,0 +1,61 @@
+well,Condition number,Condition,Condition name,Total_uM_C,Total_mM_C,Carbon_source
+B2,3,C,150 uM Pyr 0 uM thymidine,450,0.45,Pyr
+B3,9,I,600 uM Pyr 100 uM thymidine,2700,2.7,Pyr and Thy
+B4,6,F,300 uM Pyr 0 uM thymidine,900,0.9,Pyr
+B5,1,A,0 uM Pyr 0 uM thymidine,0,0,None
+B6,10,J,900 uM Pyr 0 uM thymidine,2700,2.7,Pyr
+B7,4,D,200 uM Pyr 0 uM thymidine,600,0.6,Pyr
+B8,8,H,600 uM Pyr 0 uM thymidine,1800,1.8,Pyr
+B9,2,B,0 uM Pyr 50 uM thymidine,450,0.45,Thy
+B10,7,G,300 uM Pyr 100 uM thymidine,1800,1.8,Pyr and Thy
+B11,5,E,0 uM Pyr 100 uM thymidine,900,0.9,Thy
+C2,1,A,0 uM Pyr 0 uM thymidine,0,0,None
+C3,2,B,0 uM Pyr 50 uM thymidine,450,0.45,Thy
+C4,8,H,600 uM Pyr 0 uM thymidine,1800,1.8,Pyr
+C5,4,D,200 uM Pyr 0 uM thymidine,600,0.6,Pyr
+C6,5,E,0 uM Pyr 100 uM thymidine,900,0.9,Thy
+C7,9,I,600 uM Pyr 100 uM thymidine,2700,2.7,Pyr and Thy
+C8,7,G,300 uM Pyr 100 uM thymidine,1800,1.8,Pyr and Thy
+C9,6,F,300 uM Pyr 0 uM thymidine,900,0.9,Pyr
+C10,3,C,150 uM Pyr 0 uM thymidine,450,0.45,Pyr
+C11,10,J,900 uM Pyr 0 uM thymidine,2700,2.7,Pyr
+D2,7,G,300 uM Pyr 100 uM thymidine,1800,1.8,Pyr and Thy
+D3,5,E,0 uM Pyr 100 uM thymidine,900,0.9,Thy
+D4,3,C,150 uM Pyr 0 uM thymidine,450,0.45,Pyr
+D5,9,I,600 uM Pyr 100 uM thymidine,2700,2.7,Pyr and Thy
+D6,2,B,0 uM Pyr 50 uM thymidine,450,0.45,Thy
+D7,6,F,300 uM Pyr 0 uM thymidine,900,0.9,Pyr
+D8,10,J,900 uM Pyr 0 uM thymidine,2700,2.7,Pyr
+D9,1,A,0 uM Pyr 0 uM thymidine,0,0,None
+D10,8,H,600 uM Pyr 0 uM thymidine,1800,1.8,Pyr
+D11,4,D,200 uM Pyr 0 uM thymidine,600,0.6,Pyr
+E2,8,H,600 uM Pyr 0 uM thymidine,1800,1.8,Pyr
+E3,4,D,200 uM Pyr 0 uM thymidine,600,0.6,Pyr
+E4,10,J,900 uM Pyr 0 uM thymidine,2700,2.7,Pyr
+E5,6,F,300 uM Pyr 0 uM thymidine,900,0.9,Pyr
+E6,3,C,150 uM Pyr 0 uM thymidine,450,0.45,Pyr
+E7,1,A,0 uM Pyr 0 uM thymidine,0,0,None
+E8,9,I,600 uM Pyr 100 uM thymidine,2700,2.7,Pyr and Thy
+E9,7,G,300 uM Pyr 100 uM thymidine,1800,1.8,Pyr and Thy
+E10,5,E,0 uM Pyr 100 uM thymidine,900,0.9,Thy
+E11,2,B,0 uM Pyr 50 uM thymidine,450,0.45,Thy
+F2,9,I,600 uM Pyr 100 uM thymidine,2700,2.7,Pyr and Thy
+F3,6,F,300 uM Pyr 0 uM thymidine,900,0.9,Pyr
+F4,1,A,0 uM Pyr 0 uM thymidine,0,0,None
+F5,5,E,0 uM Pyr 100 uM thymidine,900,0.9,Thy
+F6,7,G,300 uM Pyr 100 uM thymidine,1800,1.8,Pyr and Thy
+F7,10,J,900 uM Pyr 0 uM thymidine,2700,2.7,Pyr
+F8,2,B,0 uM Pyr 50 uM thymidine,450,0.45,Thy
+F9,3,C,150 uM Pyr 0 uM thymidine,450,0.45,Pyr
+F10,4,D,200 uM Pyr 0 uM thymidine,600,0.6,Pyr
+F11,8,H,600 uM Pyr 0 uM thymidine,1800,1.8,Pyr
+G2,7,G,300 uM Pyr 100 uM thymidine,1800,1.8,Pyr and Thy
+G3,8,H,600 uM Pyr 0 uM thymidine,1800,1.8,Pyr
+G4,2,B,0 uM Pyr 50 uM thymidine,450,0.45,Thy
+G5,10,J,900 uM Pyr 0 uM thymidine,2700,2.7,Pyr
+G6,4,D,200 uM Pyr 0 uM thymidine,600,0.6,Pyr
+G7,3,C,150 uM Pyr 0 uM thymidine,450,0.45,Pyr
+G8,5,E,0 uM Pyr 100 uM thymidine,900,0.9,Thy
+G9,9,I,600 uM Pyr 100 uM thymidine,2700,2.7,Pyr and Thy
+G10,1,A,0 uM Pyr 0 uM thymidine,0,0,None
+G11,6,F,300 uM Pyr 0 uM thymidine,900,0.9,Pyr
