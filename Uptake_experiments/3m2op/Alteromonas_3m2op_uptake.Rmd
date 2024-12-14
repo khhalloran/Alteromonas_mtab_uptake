@@ -1,0 +1,322 @@
+---
+title: "Alteromonas_3m2op_uptake"
+author: "KHH"
+date: "12/13/2024"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Goals
+
+Analyze the growth of Alteromonas macleodii on 3-methyl-2-oxopentanoic acid (3m2op), and the change in 3m2op concentration during Alteromonas growth. 
+
+Unlike 3m2ob, we did not use an isotopically labeled internal standard to normalize and quantify 3m2op concentrations. Therefore, analysis of 3m2op here starts with the output from riMAVEN and considerMAVEN. Please see the Kujawinski Lab github (github.com/KujawinskiLaboratory) for those scripts. This repository includes the data output from riMAVEN and considerMAVEN, and this code works from that output. 
+
+# Get packages and functions, and set paths
+
+```{r get packages}
+#for data management and plotting
+require(tidyverse)
+
+#some useful color palettes 
+require(ggsci)
+require(pals)
+require(PaletteWoodsHole)
+```
+
+
+```{r get summary function}
+## Summarizes data.
+## Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 95%).
+##   data: a data frame.
+##   measurevar: the name of a column that contains the variable to be summariezed
+##   groupvars: a vector containing names of columns that contain grouping variables
+##   na.rm: a boolean that indicates whether to ignore NA's
+##   conf.interval: the percent range of the confidence interval (default is 95%)
+summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
+                      conf.interval=.95, .drop=TRUE) {
+    library(plyr)
+
+    # New version of length which can handle NA's: if na.rm==T, don't count them
+    length2 <- function (x, na.rm=FALSE) {
+        if (na.rm) sum(!is.na(x))
+        else       length(x)
+    }
+
+    # This does the summary. For each group's data frame, return a vector with
+    # N, mean, and sd
+    datac <- ddply(data, groupvars, .drop=.drop,
+      .fun = function(xx, col) {
+        c(N    = length2(xx[[col]], na.rm=na.rm),
+          mean = mean   (xx[[col]], na.rm=na.rm),
+          sd   = sd     (xx[[col]], na.rm=na.rm)
+        )
+      },
+      measurevar
+    )
+
+    # Rename the "mean" column    
+    datac <- rename(datac, c("mean" = measurevar))
+
+    datac$se <- datac$sd / sqrt(datac$N)  # Calculate standard error of the mean
+
+    # Confidence interval multiplier for standard error
+    # Calculate t-statistic for confidence interval: 
+    # e.g., if conf.interval is .95, use .975 (above/below), and use df=N-1
+    ciMult <- qt(conf.interval/2 + .5, datac$N-1)
+    datac$ci <- datac$se * ciMult
+
+    return(datac)
+}
+
+#example use:
+#d_summary_name <- summarySE(d_example, measurevar = "variable to summarize", groupvars = c("group by this", "group by that"))
+```
+
+
+```{r define a function to save plots}
+save_plots <- function(p, filename, path){
+  ggsave(filename = filename, path = path, plot = p, device = "pdf", dpi = "retina", bg = "transparent")
+}
+```
+
+
+```{r}
+##Set your path for saving plots
+path_for_saving_plots <- "~/Documents/MIT_WHOI_JP/Kuj:Chisholm data/Uptake experiments/04.2024 reanalysis/3m2op/Figures/"
+
+```
+
+#Get data
+
+```{r}
+KHU8_data <- "~/Documents/MIT_WHOI_JP/Kuj:Chisholm data/Uptake experiments/KHU8/KHU8_forR.csv"
+d_KHU8 <- read.table(KHU8_data, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+```
+
+#Summarize treatment data
+
+```{r}
+d_KHU8_treatment <- subset(d_KHU8, Condition == "Treatment")
+
+summary_cells_KHU8_treatment <- summarySE(d_KHU8_treatment, measurevar = "Cells_mL_undilute", groupvars = c("Time"))
+
+summary_mtab_KHU8_treatment <- summarySE(d_KHU8_treatment, measurevar = "uM_3m2op", groupvars = c("Time"))
+```
+
+#Plot data like I have before, to make sure all looks right
+
+```{r plot mtab data}
+p_mtab_summary <- ggplot(data = summary_mtab_KHU8_treatment, 
+            aes(x = Time, y = uM_3m2op, ymin = uM_3m2op-sd, ymax = uM_3m2op+sd)) 
+
+p_mtab_summary + 
+  geom_point(size = 4, color = "#1f78b4", shape = 15) + 
+  geom_errorbar(color = "#1f78b4") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("[3m2op] (µM)") + 
+  ylim(0, 200)
+
+```
+
+```{r plot cell data}
+p_cells_summary <- ggplot(data = summary_cells_KHU8_treatment, 
+            aes(x = Time, y = Cells_mL_undilute, ymin = Cells_mL_undilute-sd, ymax = Cells_mL_undilute+sd)) 
+
+p_cells_summary + geom_point(size = 4, color = "#33a02c") + geom_errorbar(color = "#33a02c") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("Cells/mL") + 
+  ylim(0, 5e+07)
+```
+Looks like it has before! Cool
+
+#Plot on log scales
+
+```{r mtab data log scale}
+p_mtab_summary + 
+  geom_point(size = 4, color = "#1f78b4", shape = 15) + 
+  geom_errorbar(color = "#1f78b4") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("[3m2op] (µM)") + 
+  scale_y_log10()
+```
+
+```{r cell data log scale}
+p_cells_summary + geom_point(size = 4, color = "#33a02c") + geom_errorbar(color = "#33a02c") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("Cells/mL") + 
+  scale_y_log10()
+```
+
+This is useful - see distinct growth in the first 20h! 
+
+What does the no 3m2op control cell growth look like?
+
+```{r}
+d_KHU8_no_mtab <- d_KHU8 %>%
+  filter(Condition == "No 3m2op")
+```
+
+```{r}
+summary_cells_KHU8_no_mtab <- summarySE(d_KHU8_no_mtab, measurevar = "Cells_mL_undilute", groupvars = c("Time"))
+```
+
+```{r}
+p_cells_summary_no_mtab <- ggplot(data = summary_cells_KHU8_no_mtab, 
+            aes(x = Time, y = Cells_mL_undilute, ymin = Cells_mL_undilute-sd, ymax = Cells_mL_undilute+sd)) 
+
+p_cells_summary_no_mtab + 
+  geom_point(size = 4, color = "#33a02c") + 
+  geom_errorbar(color = "#33a02c") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("Cells/mL") + 
+  scale_y_log10(labels = scientific)
+```
+
+OK, so I'm not too worried about the change in cell concentration in the treatment, because it's more or less matched by the "no carbon added" condition - so this small bit of cell growth can be explained by the residual seawater carbon. 
+
+```{r}
+p_cells_summary + geom_point(size = 4, color = "#33a02c") + geom_errorbar(color = "#33a02c") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("Cells/mL") + 
+  scale_y_log10(limits = c(1e+05, 5e+07))
+```
+
+#Save plots
+
+```{r}
+p <- p_mtab_summary + 
+  geom_point(size = 4, color = "#1f78b4", shape = 15) + 
+  geom_errorbar(color = "#1f78b4") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("[3m2op] (µM)") + 
+  ylim(0, 200)
+
+save_plots(p, "uM_3m2op_KHU8_linearScale.pdf", path_for_saving_plots)
+```
+
+```{r}
+p <- p_mtab_summary + 
+  geom_point(size = 4, color = "#1f78b4", shape = 15) + 
+  geom_errorbar(color = "#1f78b4") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("[3m2op] (µM)") + 
+  scale_y_log10()
+
+save_plots(p, "uM_3m2op_KHU8_logScale.pdf", path_for_saving_plots)
+```
+
+```{r}
+p <- p_cells_summary + geom_point(size = 4, color = "#33a02c") + geom_errorbar(color = "#33a02c") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("Cells/mL") + 
+  scale_y_log10(limits = c(1e+05, 5e+07))
+
+save_plots(p, "cells_mL_KHU8_logScale.pdf", path_for_saving_plots)
+```
+
+
+```{r}
+p <- p_cells_summary_no_mtab + 
+  geom_point(size = 4, color = "#33a02c") + 
+  geom_errorbar(color = "#33a02c") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("Cells/mL") + 
+  scale_y_log10(labels = scientific, limits = c(1e+05, 5e+07))
+
+save_plots(p, "cells_mL_no_mtab_KHU8_logScale.pdf", path_for_saving_plots)
+```
+
+#Significance testing 
+
+Given the change in cell density observed with time, I think there are a few tests to be done here: 
+1. difference between final cell density in no C added condition vs. in C added condition
+2. difference between [3m2op] at t = 0 and at end of Alteromonas growth
+3. difference between [3m2op] at t = 0 and at t = final 
+
+
+```{r separate out data for t testing}
+d_test_noC_C_final_cells <- d_KHU8 %>%
+  filter(Time == 58.5) %>%
+  filter(Condition == "No 3m2op" | Condition == "Treatment")
+
+d_test_3m2op_0_to_12 <- d_KHU8 %>%
+  filter(Condition == "Treatment") %>%
+  filter(Time == 0 | Time == 12.5) 
+
+d_test_3m2op_0_to_end <- d_KHU8 %>%
+  filter(Condition == "Treatment") %>%
+  filter(Time == 0 | Time == 58.5)
+```
+
+```{r}
+t.test(Cells_mL_undilute ~ Condition, data = d_test_noC_C_final_cells)
+```
+
+Final cell concentration in no C added condition is significantly higher than final cell concentration in the 3m2op treatment
+
+```{r}
+t.test(uM_3m2op ~ Time, data = d_test_3m2op_0_to_12)
+```
+
+There is no significant difference in 3m2op concentration from 0 to 12.5h
+
+```{r}
+t.test(uM_3m2op ~ Time, data = d_test_3m2op_0_to_end)
+```
+
+There is no significant difference in 3m2op concentration from the start to the end of the experiment.
+
+
+```{r}
+t.test(Cells_mL_undilute ~ Time, data = d_test_3m2op_0_to_end)
+```
+
+There is a significant difference in cell density from the start to the end of the experiment. 
+
+```{r}
+t.test(Cells_mL_undilute ~ Time, data = d_test_3m2op_0_to_12)
+```
+There is a significant difference in cell density from t = 0 to t = 12.5
+
+What about from 12.5 to the end?
+
+```{r}
+d_test_3m2op_12.5_to_end <- d_KHU8 %>%
+  filter(Condition == "Treatment") %>%
+  filter(Time == 12.5 | Time == 58.5)
+
+t.test(Cells_mL_undilute ~ Time, data = d_test_3m2op_12.5_to_end)
+```
+
+There is no significant difference in cell density from t = 12.5 to the end in the +3m2ob + Alteromonas condition
+
+```{r}
+t.test(uM_3m2op ~ Time, data = d_test_3m2op_12.5_to_end)
+```
+
+There is no significant difference in 3m2op concentration from t = 12.5 to the end in the +3m2ob + Alteromonas condition

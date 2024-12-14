@@ -1,0 +1,512 @@
+---
+title: "Alteromonas_3m2ob_uptake"
+author: "KHH"
+date: "12/13/2024"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Goals
+
+Analyze the growth of Alteromonas macleodii on 3-methyl-2-oxobutanoic acid (3m2ob), and the change in 3m2ob concentration during Alteromonas growth. 
+
+Though initial curve fitting and quantification was performed in MATLAB (see github.com/KujawinskiLaboratory for "considerMAVEN.m" and "riMAVEN.m" scripts), additional data visualization and QA/QC was performed here. Additionally, quantification using the ratio of unlabeled to labeled 3m2ob was performed here (considerMAVEN.m and riMAVEN.m use internal standards for QA/QC, but not for normalization and quantification)
+ 
+# Get packages and functions, and set paths
+
+```{r get packages}
+#for data management and plotting
+require(tidyverse)
+
+#some useful color palettes 
+require(ggsci)
+require(pals)
+require(PaletteWoodsHole)
+```
+
+
+```{r get summary function}
+## Summarizes data.
+## Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 95%).
+##   data: a data frame.
+##   measurevar: the name of a column that contains the variable to be summariezed
+##   groupvars: a vector containing names of columns that contain grouping variables
+##   na.rm: a boolean that indicates whether to ignore NA's
+##   conf.interval: the percent range of the confidence interval (default is 95%)
+summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
+                      conf.interval=.95, .drop=TRUE) {
+    library(plyr)
+
+    # New version of length which can handle NA's: if na.rm==T, don't count them
+    length2 <- function (x, na.rm=FALSE) {
+        if (na.rm) sum(!is.na(x))
+        else       length(x)
+    }
+
+    # This does the summary. For each group's data frame, return a vector with
+    # N, mean, and sd
+    datac <- ddply(data, groupvars, .drop=.drop,
+      .fun = function(xx, col) {
+        c(N    = length2(xx[[col]], na.rm=na.rm),
+          mean = mean   (xx[[col]], na.rm=na.rm),
+          sd   = sd     (xx[[col]], na.rm=na.rm)
+        )
+      },
+      measurevar
+    )
+
+    # Rename the "mean" column    
+    datac <- rename(datac, c("mean" = measurevar))
+
+    datac$se <- datac$sd / sqrt(datac$N)  # Calculate standard error of the mean
+
+    # Confidence interval multiplier for standard error
+    # Calculate t-statistic for confidence interval: 
+    # e.g., if conf.interval is .95, use .975 (above/below), and use df=N-1
+    ciMult <- qt(conf.interval/2 + .5, datac$N-1)
+    datac$ci <- datac$se * ciMult
+
+    return(datac)
+}
+
+#example use:
+#d_summary_name <- summarySE(d_example, measurevar = "variable to summarize", groupvars = c("group by this", "group by that"))
+```
+
+
+```{r define a function to save plots}
+save_plots <- function(p, filename, path){
+  ggsave(filename = filename, path = path, plot = p, device = "pdf", dpi = "retina", bg = "transparent")
+}
+```
+
+
+```{r}
+##Set your path for saving plots
+path_for_saving_plots <- "~/Documents/MIT_WHOI_JP/Kuj:Chisholm data/Uptake experiments/04.2024 reanalysis/3m2ob/Figures/"
+
+```
+
+# Get data
+
+1. A spreadsheet of peak areas in all samples and standards for the compounds targeted for LCMS (3-methyl-2-oxobutanoic acid, D5-3-methyl-2-oxobutanoic acid, and D2-biotin). 
+2. A spreadsheet of sample volumes and cell concentrations. 
+
+
+```{r pull data into R}
+Uptake_data <- "~/Documents/MIT_WHOI_JP/Kuj:Chisholm data/Uptake experiments/3m2ob uptake 7 reanalysis/KHU7_peaklist_v3_peakAreaIS_workup_2023.csv"
+
+d_3m2ob_conc <- read.table(Uptake_data, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+```
+
+
+```{r snag dataframe wtih sample volume info}
+volume_data <- "~/Documents/MIT_WHOI_JP/Kuj:Chisholm data/Uptake experiments/KHU7/KHU7_forR.csv"
+
+d_3m2ob_volume_full <- read.table(volume_data, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+```
+
+
+```{r add detail to Sample.condition}
+# 
+# if(d_3m2ob_conc$Sample.name == "KHU7_Pool"){
+#   d_3m2ob_conc$Sample.condition <- "pool"
+# }
+
+
+d_3m2ob_conc[(d_3m2ob_conc$Sample.name == "KHU7_Pool"), "Sample.condition"] <- "pool"
+d_3m2ob_conc[(d_3m2ob_conc$Sample.name == "PoolCondition"), "Sample.condition"] <- "pool"
+d_3m2ob_conc[(d_3m2ob_conc$Sample.name == "MQ Blank" | d_3m2ob_conc$Sample.name == "MQ blank pos"), "Sample.condition"] <- "MQ blank"
+d_3m2ob_conc[(d_3m2ob_conc$injection.number > 4 & d_3m2ob_conc$injection.number < 16), "Sample.condition"] <- "MQ curve"
+d_3m2ob_conc[(d_3m2ob_conc$injection.number > 108 & d_3m2ob_conc$injection.number < 121), "Sample.condition"] <- "Matrix curve"
+d_3m2ob_conc[(d_3m2ob_conc$injection.number == 2), "Sample.condition"] <- "MQ blank"
+d_3m2ob_conc[(d_3m2ob_conc$injection.number == 3), "Sample.condition"] <- "MQ 1000 ng_mL"
+
+#d_OD600_diauxic_analysis_viz[(d_OD600_diauxic_analysis_viz$Carbon_source == "None"), "metabolite"] <- NA
+```
+
+
+```{r plot 3m2ob peak area by injection number}
+p <- ggplot(data = d_3m2ob_conc, aes(y = log(X3m2ob.peakArea), x = injection.number, color = Sample.condition))
+
+p + geom_point()
+```
+
+```{r}
+p <- ggplot(data = d_3m2ob_conc, aes(y = X3m2ob.peakArea, x = injection.number, color = Sample.condition))
+
+p + geom_point()
+```
+
+
+```{r calculate peak area ratios and plot by injection number}
+d_3m2ob_conc$peak_area_ratio <- d_3m2ob_conc$X3m2ob.peakArea/d_3m2ob_conc$X3m2ob.d5.peakArea
+
+p <- ggplot(data = d_3m2ob_conc, aes(y = peak_area_ratio, x = injection.number, color = Sample.condition))
+p + geom_point()
+```
+
+
+```{r}
+p <- ggplot(data = d_3m2ob_conc, aes(y = log(peak_area_ratio), x = injection.number, color = Sample.condition))
+p + geom_point()
+```
+
+From these plots, it seems like I can leave out the 1000 ng/mL point in my standard curve without affecting quantification too much. I'll try it. 
+
+#Check internal standards - do they look like I expect them to, more or less?
+
+```{r plot 3m2ob-d5 by injection}
+p <- ggplot(data = d_3m2ob_conc, aes(y = X3m2ob.d5.peakArea, x = injection.number))
+
+p + geom_point()
+```
+
+```{r identify which samples have the anomolous IS signal}
+
+d_3m2ob_IS_outliers <- filter(d_3m2ob_conc, X3m2ob.d5.peakArea < 5000 | X3m2ob.d5.peakArea > 15000)
+d_3m2ob_IS_outliers <- d_3m2ob_IS_outliers %>% select(sample, injection.number, Sample.name, X3m2ob.peakArea, X3m2ob.d5.peakArea)
+```
+
+My MQ blanks have a very low IS signal, which is as expected, since I didn't put an internal standard in there. 
+
+My 1000 ng/mL samples are the samples with the very high IS signal. Not the dream! I'll see how it looks when I include those samples in a standard curve. 
+
+Out of curiosity, how does the biotin signal look? 
+
+```{r plot d2 biotin by injection}
+p <- ggplot(data = d_3m2ob_conc, aes(y = d2.Biotin.peakArea, x = injection.number))
+
+p + geom_point()
+```
+
+
+# Have a look at your standard curves
+
+```{r standard curve in MQ, from peak area}
+
+d_curve_MQ <- filter(d_3m2ob_conc, Std.conc._ng_mL_ >= 0 & injection.number < 20)
+d_curve_MQ <- d_curve_MQ %>% select(sample, injection.number, Sample.name, Std.conc._ng_mL_, X3m2ob.peakArea, X3m2ob.d5.peakArea, d2.Biotin.peakArea)
+
+p <- ggplot(d_curve_MQ, aes(y = X3m2ob.peakArea, x = Std.conc._ng_mL_))
+
+p + geom_point()
+```
+
+```{r calculate peak area ratios, plot standard curve}
+d_curve_MQ$peak_area_ratio <- d_curve_MQ$X3m2ob.peakArea/d_curve_MQ$X3m2ob.d5.peakArea
+
+p <- ggplot(data = d_curve_MQ, aes(y = peak_area_ratio, x = Std.conc._ng_mL_))
+p + geom_point()
+```
+
+Yeah definitely some weirdos in the standard curve when I plot it this way! Looks like the 1000 ng/mL sample must have gotten a double dose of the internal standard. 
+
+What are the other weirdos?
+
+```{r}
+d_curve_MQ %>% filter(peak_area_ratio > 2) %>% list()
+```
+
+Ah those are just my zeros! Which have neither metabolite nor IS in there, so it makes sense that they're weirdly high. 
+
+#Fit curve - get R2 and coefficients
+
+```{r look at MQ curve}
+#Don't include 0 or 1000 ng/mL endpoints, since those are wonky
+
+d_curve_MQ <- filter(d_curve_MQ, Std.conc._ng_mL_ > 0 & Std.conc._ng_mL_ < 1000)
+
+p <- ggplot(data = d_curve_MQ, aes(y = peak_area_ratio, x = Std.conc._ng_mL_))
+p + geom_point() + scale_y_log10() + scale_x_log10()
+```
+
+Curious about whether using this standard curve improves quantification substantially relative to using a curve without the internal standard. So for now I'm just going to construct a curve using points down to 10 ng/mL 
+
+```{r narrow down points to use in MQ curve}
+d_curve_MQ <- filter(d_curve_MQ, Std.conc._ng_mL_ >= 10 & Std.conc._ng_mL_ < 1000)
+
+p <- ggplot(data = d_curve_MQ, aes(y = peak_area_ratio, x = Std.conc._ng_mL_))
+p + geom_point() + scale_y_log10() + scale_x_log10()
+```
+
+```{r fit MQ curve}
+fit_MQ <- lm(peak_area_ratio ~ Std.conc._ng_mL_, data = d_curve_MQ)
+#summary(fit_MQ)
+d_MQ_fit_coef <- as.data.frame(t(fit_MQ$coefficients))
+```
+
+```{r turn MQ fit coefficients into useful format}
+d_MQ_fit_coef$Matrix_type <- "MQ"
+d_MQ_fit_coef <- d_MQ_fit_coef %>% dplyr::rename("fit_from_curve_b" = "(Intercept)")
+d_MQ_fit_coef <- d_MQ_fit_coef %>% dplyr::rename("fit_from_curve_m" = "Std.conc._ng_mL_")
+colnames(d_MQ_fit_coef)
+```
+
+```{r look at MM curve}
+d_curve_MM <- d_3m2ob_conc %>% filter(injection.number > 108 & injection.number < 121)
+
+p <- ggplot(data = d_curve_MM, aes(y = peak_area_ratio, x = Std.conc._ng_mL_))
+p + 
+  geom_point() + 
+  scale_x_log10() + 
+  scale_y_log10()
+```
+From this plot, it looks like for the matrix matched curve I should only consider standards > 1 ng/mL and < 1000 ng/mL. 
+
+```{r narrow down points for MM curve and plot again}
+d_curve_MM <- d_curve_MM %>% filter(Std.conc._ng_mL_ > 1 & Std.conc._ng_mL_ < 1000)
+
+p <- ggplot(data = d_curve_MM, aes(y = peak_area_ratio, x = Std.conc._ng_mL_))
+p + 
+  geom_point() + 
+  scale_x_log10() + 
+  scale_y_log10()
+```
+
+```{r fit MM curve}
+fit_MM <- lm(peak_area_ratio ~ Std.conc._ng_mL_, data = d_curve_MM)
+summary(fit_MM)
+d_MM_fit_coef <- as.data.frame(t(fit_MM$coefficients))
+```
+
+```{r turn MM fit coefficients into useful format}
+d_MM_fit_coef$Matrix_type <- "MM"
+d_MM_fit_coef <- d_MM_fit_coef %>% dplyr::rename("fit_from_curve_b" = "(Intercept)")
+d_MM_fit_coef <- d_MM_fit_coef %>% dplyr::rename("fit_from_curve_m" = "Std.conc._ng_mL_")
+colnames(d_MM_fit_coef)
+```
+
+```{r merge coefficient calculation dataframes}
+d_curve_fits <- rbind(d_MM_fit_coef, d_MQ_fit_coef)
+```
+
+#Calculate concentrations in samples from curve
+
+```{r find peak ratio to conc coefficients}
+d_curve_fits$peak_ratio_to_conc_m <- 1/d_curve_fits$fit_from_curve_m
+d_curve_fits$peak_ratio_to_conc_b <- -1 * (d_curve_fits$fit_from_curve_b/d_curve_fits$fit_from_curve_m)
+d_coef_MM <- d_curve_fits %>% filter(Matrix_type == "MM")
+d_coef_MQ <- d_curve_fits %>% filter(Matrix_type == "MQ")
+```
+
+```{r find concentrations from peak ratio coefficients}
+MM_m <- d_coef_MM$peak_ratio_to_conc_m
+MM_b <- d_coef_MM$peak_ratio_to_conc_b
+MQ_m <- d_coef_MQ$peak_ratio_to_conc_m
+MQ_b <- d_coef_MQ$peak_ratio_to_conc_b
+
+d_3m2ob_conc$MM_m <- MM_m
+d_3m2ob_conc$MM_b <- MM_b
+d_3m2ob_conc$MQ_m <- MQ_m
+d_3m2ob_conc$MQ_b <- MQ_b
+
+d_3m2ob_conc$instrument_conc_MM <- d_3m2ob_conc$peak_area_ratio * d_3m2ob_conc$MM_m + d_3m2ob_conc$MM_b
+
+d_3m2ob_conc$instrument_conc_MQ <- d_3m2ob_conc$peak_area_ratio * d_3m2ob_conc$MQ_m + d_3m2ob_conc$MQ_b
+```
+
+
+#Convert from instrument conc to sample conc
+
+```{r}
+d_3m2ob_volume_full <- d_3m2ob_volume_full %>% dplyr::rename("Sample.name" = "Sample_name")
+
+d_3m2ob_volume <- select(d_3m2ob_volume_full, c("Sample.name", "Cells_mL", "Volume_filtrate_mL"))
+```
+
+```{r merge sample volume info w/ instrumental conc dataframe}
+d_3m2ob_conc <- full_join(d_3m2ob_conc, d_3m2ob_volume, by = "Sample.name")
+```
+
+In this experiment, extracted samples were dried down, brought up in 1 mL of MQ, and diluted 400X prior to analysis. The extraction efficiency of 3m2ob is 10.1%. 100/10.1 = 9.90099; 400*9.0099 = 3960.396. Multiply calculated instrumental concs by 3960.396 to get to pre-extraction ng 3m2ob. 
+
+Then, divide by mL filtrate to get to sample ng/mL 3m2ob. 
+
+Then, the MW of 3m2ob-Na (the compound used for making up 3m2ob std curve) is 138.10 g/mol. Divide by 138.10 to get to nmol/mL = µmol/L = µM
+
+```{r convert from instrument conc to sample conc}
+d_3m2ob_conc$MM_pre_extraction_ng <- d_3m2ob_conc$instrument_conc_MM * 3960.396
+d_3m2ob_conc$MM_sample_conc_ng_mL <- d_3m2ob_conc$MM_pre_extraction_ng / d_3m2ob_conc$Volume_filtrate_mL
+d_3m2ob_conc$MM_sample_conc_uM <- d_3m2ob_conc$MM_sample_conc_ng_mL / 138.10
+
+d_3m2ob_conc$MQ_pre_extraction_ng <- d_3m2ob_conc$instrument_conc_MQ * 3960.396
+d_3m2ob_conc$MQ_sample_conc_ng_mL <- d_3m2ob_conc$MQ_pre_extraction_ng / d_3m2ob_conc$Volume_filtrate_mL
+d_3m2ob_conc$MQ_sample_conc_uM <- d_3m2ob_conc$MQ_sample_conc_ng_mL / 138.10
+```
+
+
+#Plot peak ratio-generated values vs. time
+
+```{r calculate summary values from calculated uM concs}
+d_summary_uM_MM <- summarySE(d_3m2ob_conc, measurevar = "MM_sample_conc_uM", groupvars = c("t", "Sample.condition"))
+
+d_summary_uM_MQ <- summarySE(d_3m2ob_conc, measurevar = "MQ_sample_conc_uM", groupvars = c("t", "Sample.condition"))
+```
+
+
+```{r plot concentration over time using MM data}
+p <- ggplot(data = filter(d_summary_uM_MM, Sample.condition == "Treatment"), aes(y = MM_sample_conc_uM, x = t, ymin = MM_sample_conc_uM - sd, ymax = MM_sample_conc_uM + sd))
+
+p + geom_point() + geom_errorbar()
+```
+
+
+```{r plot concentration over time using MQ data}
+p <- ggplot(data = filter(d_summary_uM_MQ, Sample.condition == "Treatment"), aes(y = MQ_sample_conc_uM, x = t, ymin = MQ_sample_conc_uM - sd, ymax = MQ_sample_conc_uM + sd))
+
+p + geom_point() + geom_errorbar()
+```
+
+#Compare quantification with vs. without an internal standard
+
+```{r generate summary data}
+#these are the concentration values calculated with Kujawinski lab code in MATLAB, using riMAVEN and considerMAVEN. These calculations did not use an internal standard for normalization and quantification
+
+d_summary_uM_old <- summarySE(d_3m2ob_volume_full, measurevar = "uM_3m2ob", groupvars = c("t", "Sample_condition"))
+```
+
+```{r plot data based on old workflow}
+p <- ggplot(data = filter(d_summary_uM_old, Sample_condition == "Treatment"), aes(y = uM_3m2ob, x = t, ymin = uM_3m2ob - sd, ymax = uM_3m2ob + sd))
+
+p + geom_point() + geom_errorbar()
+```
+
+In general, using the IS-normalized data results in less variability than using unnnormalized data, as expected. However, at t = 36, there's much less variability in my old calculated concentrations than in my new calcualted concentrations and I am not sure why. Regardless, I think I need to move on - I'll use the IS-normalized, MM concentration data here. 
+
+#Plot IS-normalized, MM conc x time
+I'm not sure log scale is very useful for looking at the change in metabolite concentration, so I'll save a version in log and in linear scale. 
+
+```{r}
+p_mtab_summary <- ggplot(data = filter(d_summary_uM_MM, Sample.condition == "Treatment"), 
+            aes(x = t, y = MM_sample_conc_uM, ymin = MM_sample_conc_uM - sd, ymax = MM_sample_conc_uM + sd)) 
+
+p <- p_mtab_summary + 
+  geom_point(size = 4, color = "#1f78b4", shape = 15) + 
+  geom_errorbar(color = "#1f78b4") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("[3m2ob] (µM)") + 
+  ylim(0, 200)
+
+save_plots(p, "uM_3m2ob_KHU7_linearScale.pdf", path_for_saving_plots)
+
+p <- p_mtab_summary + 
+  geom_point(size = 4, color = "#1f78b4", shape = 15) + 
+  geom_errorbar(color = "#1f78b4") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("[3m2ob] (µM)") + 
+  scale_y_log10()
+
+save_plots(p, "uM_3m2ob_KHU7_logScale.pdf", path_for_saving_plots)
+```
+
+#Plot cells/mL x t
+
+```{r summarize cell conc data}
+d_summary_cells_mL <- summarySE(d_3m2ob_conc, "Cells_mL", groupvars = c("t", "Sample.condition"))
+
+d_summary_cells_toPlot <- d_summary_cells_mL %>% 
+  filter(Sample.condition == "Treatment")
+```
+
+```{r}
+p_cells_summary <- ggplot(data = d_summary_cells_toPlot, aes(x = t, y = Cells_mL, ymin = Cells_mL - sd, ymax = Cells_mL + sd))
+
+#plot as you have before, but add in fit curve
+p <- p_cells_summary + geom_point(size = 4, color = "#33a02c") +
+  geom_errorbar(color = "#33a02c") + 
+  geom_smooth(method = "lm", se = FALSE, color = "#33a02c") +
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("Cells/mL") + 
+  #ylim(0, 5e+07) + 
+  scale_y_log10(limits = c(1e+05, 5e+07))
+
+save_plots(p, "cells_mL_3m2ob_KHU7_logScale.pdf", path_for_saving_plots)
+```
+
+#Find parameters for fit of cell count ~ time
+
+```{r}
+m_cells <- lm(log10(Cells_mL) ~ t, data = d_summary_cells_toPlot)
+summary(m_cells)
+```
+
+
+
+#Calculate the fold change in both 3m2ob and in cells
+
+```{r change in mtab conc}
+d_uM_treatment <- d_summary_uM_MM %>%
+  filter(Sample.condition == "Treatment")
+
+d_uM_initial <- d_uM_treatment %>%
+  filter(t == 0)
+
+d_uM_final <- d_uM_treatment %>%
+  filter(t == 58.75)
+
+uM_initial <- d_uM_initial$MM_sample_conc_uM
+uM_final <- d_uM_final$MM_sample_conc_uM
+
+fold_decrease_uM <- uM_initial/uM_final
+
+print(fold_decrease_uM)
+```
+
+3m2ob saw an 8-fold decrease in concentration
+
+```{r change in cell conc}
+d_cell_initial <- d_summary_cells_toPlot %>%
+  filter(t == 0)
+
+d_cell_final <- d_summary_cells_toPlot %>%
+  filter(t == 58.75)
+
+cells_initial <- d_cell_initial$Cells_mL
+cells_final <- d_cell_final$Cells_mL
+
+fold_increase_cells <- cells_final/cells_initial
+
+print(fold_increase_cells)
+```
+
+Cells saw a 94-fold increase in concentration
+
+#Plot the no mtab cell growth
+
+```{r}
+d_no_mtab <- d_summary_cells_mL %>%
+  filter(Sample.condition == "No 3m2ob")
+```
+
+
+```{r}
+p_cells_summary_no_mtab <- ggplot(data = d_no_mtab, 
+            aes(x = t, y = Cells_mL, ymin = Cells_mL-sd, ymax = Cells_mL+sd)) 
+
+require(scales)
+
+p <- p_cells_summary_no_mtab + 
+  geom_point(size = 4, color = "#33a02c") + 
+  geom_errorbar(color = "#33a02c") + 
+  theme_classic() + 
+  theme(text = element_text(size =22)) + 
+  xlab("Time (hrs)") + 
+  ylab("Cells/mL") + 
+  scale_y_log10(labels = scientific, limits = c(1e+05, 5e+07))
+
+p
+
+save_plots(p, "cells_mL_no_mtab_3m2ob_logScale.pdf", path_for_saving_plots)
+```
+
