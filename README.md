@@ -1,7 +1,7 @@
 # Alteromonas metabolite uptake
 Code and data for the analysis of experiments testing the relationship between _Alteromonas macleodii_ MIT1002 and select _Prochlorococcus_ metabolites. 
 
-Two types of experiments were used for this project. 
+Two types of experiments were used for this project: 
   1. A set of growth experiments, where _Alteromonas_ was grown in 96-well plates with either pyruvate, a _Prochlorococcus_ derived metabolite, or a mix of pyruvate and _Prochlorococcus_ metabolite. In these experiments growth was measured as OD600, measured every 30 minutes for 48 hours using a plate reader. 
   2. Uptake experiments, where _Alteromonas_ was grown with a select _Prochlorococcus_ metabolite. In these experiments, we measured both _Alteromonas_ growth (by flow cytometry) and the change in metabolite concentration (by solid-phase extraction and liquid chromatography-tandem mass spectrometry). 
 
